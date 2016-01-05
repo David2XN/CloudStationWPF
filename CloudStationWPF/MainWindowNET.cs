@@ -68,7 +68,15 @@ namespace CloudStationWPF
             ClientConnection connection = new ClientConnection();
             connection.socket = handler;
             connection.setInfoFromSocket();
-            clients.Add(connection.stringId, connection);
+
+
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
+                clientsToConnect.Add(connection.stringId, connection);
+                txbNewConnections.Text = "" + clientsToConnect.Count;
+            }));
+
+
+
             connection.Receive();
 
         }

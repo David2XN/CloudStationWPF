@@ -24,3 +24,4 @@ E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\obj\Debug\MainWindow.baml
 E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.g.resources
 E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.Properties.Resources.resources
 E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.csproj.GenerateResource.Cache
+E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.csprojResolveAssemblyReference.cache

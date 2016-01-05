@@ -8,18 +8,29 @@
         Title="CloudStation" Height="350" Width="525" ContentRendered="Window_ContentRendered">
     <Grid>
         <TextBox x:Name="txpIPAddress" HorizontalAlignment="Left" Height="23" Margin="76,10,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="label" Content="IP adress" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="Connect To" HorizontalAlignment="Left" Margin="2,6,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="Port" HorizontalAlignment="Left" Margin="216,6,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label2" Content="Local Port" HorizontalAlignment="Left" Margin="187,37,0,0" VerticalAlignment="Top" Width="67"/>
-        <TextBox x:Name="txbConnectPort" HorizontalAlignment="Left" Height="23" Margin="261,9,0,0" TextWrapping="Wrap" Text="4222" VerticalAlignment="Top" Width="71"/>
-        <TextBox x:Name="txbServerPort" HorizontalAlignment="Left" Height="23" Margin="261,41,0,0" TextWrapping="Wrap" Text="4222" VerticalAlignment="Top" Width="71"/>
+        <Label x:Name="label2" Content="Port" HorizontalAlignment="Left" Margin="216,37,0,0" VerticalAlignment="Top" Width="40"/>
+        <TextBox x:Name="txbConnectPort" HorizontalAlignment="Left" Height="23" Margin="261,9,0,0" TextWrapping="Wrap" Text="4220" VerticalAlignment="Top" Width="71"/>
+        <TextBox x:Name="txbServerPort" HorizontalAlignment="Left" Height="23" Margin="261,41,0,0" TextWrapping="Wrap" Text="4220" VerticalAlignment="Top" Width="71"/>
         <Button x:Name="btnServer" Content="Launch Server" HorizontalAlignment="Left" Margin="365,40,0,0" VerticalAlignment="Top" Width="133" Click="btnServer_Click"/>
-        <Button x:Name="btnStart" Content="Start And Connect" HorizontalAlignment="Left" Margin="365,9,0,0" VerticalAlignment="Top" Width="133" Click="btnStart_Click"/>
-        <RichTextBox x:Name="txbLog" Margin="0,88,20.667,20.667" HorizontalAlignment="Right" Width="478">
+        <Button x:Name="btnStart" Content="Connect" HorizontalAlignment="Left" Margin="365,9,0,0" VerticalAlignment="Top" Width="133" Click="btnStart_Click"/>
+        <RichTextBox x:Name="txbLog" Margin="20,127,20.667,20.667">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
             <FlowDocument/>
         </RichTextBox>
-        <Label x:Name="label3" Content="Log" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="76,40,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Label x:Name="label3" Content="Log" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="423,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <TextBox x:Name="txbNodeCount" HorizontalAlignment="Left" Height="23" Margin="472,99,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" IsEnabled="False"/>
+        <Label x:Name="label4" Content="Nodes" HorizontalAlignment="Left" Margin="423,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.965,0.009"/>
+        <TextBox x:Name="txbNewConnections" HorizontalAlignment="Left" Height="23" Margin="397,100,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" IsEnabled="False"/>
+        <Label x:Name="label4_Copy" Content="New Connections" HorizontalAlignment="Left" Margin="294,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.965,0.009" Width="103"/>
+        <TextBox x:Name="txpMyIPAddress" HorizontalAlignment="Left" Height="23" Margin="76,41,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label_Copy" Content="My IP" HorizontalAlignment="Left" Margin="2,37,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -35,6 +35,8 @@ namespace CloudStationWPF
 
         Dictionary<string, ClientConnection> clients = new Dictionary<string, ClientConnection>();
 
+        Dictionary<string, ClientConnection> clientsToConnect = new Dictionary<string, ClientConnection>();
+
         List<MessageLIS> toSendCritical = new List<MessageLIS>();
 
         List<CriticalRequest> criticalRequests = new List<CriticalRequest>();
@@ -53,6 +55,12 @@ namespace CloudStationWPF
         public void accessCriticalSection()
         {
             writeToLog("I want enter Critical Section");
+
+            if(clients.Count == 0)
+            {
+                writeToLog("Entering critical section because no nodes to notify");
+                enteredCriticalSection();
+            }
             CriticalRequest newRequest = new CriticalRequest(++lamportCounter, stringId);
             addRequestToQueue(newRequest);
             MessageLIS message = new MessageLIS('L', "");
@@ -71,6 +79,18 @@ namespace CloudStationWPF
         {
             writeToLog("Entered Critical Section");
             inCriticalSection = true;
+
+            foreach (var client in clientsToConnect)
+            {
+                sendMessageToAll(new MessageLIS('N', client.Key));
+                client.Value.sendMessage('C', configurationAsString());
+                addClient(client.Value);
+            }
+
+            clientsToConnect.Clear();
+            txbNewConnections.Text = "" + clientsToConnect.Count;
+
+
             leaveCriticalSection();
         }
 
@@ -91,15 +111,26 @@ namespace CloudStationWPF
         public void receivedMessage(MessageLIS message)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
-                ClientConnection client = clients[message.stringId];
+                //writeToLog("Recieved message:" + message.messageType);
+                ClientConnection client;
+                if (clients.ContainsKey(message.stringId))
+                    client = clients[message.stringId];
+                else
+                    client = clientsToConnect[message.stringId];
+
                 if (message.messageType == 'J') // RequestJoin
                 {
-                    writeToLog("New client wants to joins");
-                    client.sendMessage('C', configurationAsString());
+                    writeToLog("New client wants to join");
+                    accessCriticalSection();
                 }
-                else if (message.messageType == 'C') // SendConfiguration
+                else if (message.messageType == 'C') // Configuration
                 {
-                    writeToLog("Sending Conf to new client");
+                    writeToLog("Recieved configuration");
+                }
+                else if (message.messageType == 'N')
+                {
+                    var connectionInfo = message.messageData.Split(':');
+                    addNewClientConnection(connectionInfo[0], int.Parse(connectionInfo[1]));
                 }
                 else if (message.messageType == 'L') // Lamport Request CS
                 {
@@ -130,9 +161,13 @@ namespace CloudStationWPF
                 }
                 else if (message.messageType == 'F') // Release CS
                 {
-                    writeToLog(string.Format("{0} ({1}) CS Released", message.stringId));
+                    writeToLog(string.Format("{0} CS Released", message.stringId));
                     int requestIndex = criticalRequests.FindIndex(c => c.stringId == message.stringId);
-                    criticalRequests.RemoveAt(requestIndex);
+                    if(requestIndex >= 0)
+                    {
+                        criticalRequests.RemoveAt(requestIndex);
+                    }
+                    
                 }
                 else if (message.messageType == 'T') // Transfer File (Text Only)
                 {
@@ -157,7 +192,7 @@ namespace CloudStationWPF
         private void btnServer_Click(object sender, RoutedEventArgs e)
         {
             runningPort = int.Parse(txbServerPort.Text);
-            stringId = "127.0.0.1:" + runningPort;
+            stringId = txpMyIPAddress.Text + ":" + runningPort;
             if (server != null)
                 server.Abort();
 
@@ -173,7 +208,8 @@ namespace CloudStationWPF
         public void writeToLog(string text)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
-                string formText = DateTime.Now.ToString() + ":" + text + Environment.NewLine; //
+                string formText = DateTime.Now.ToString() + ":" + text + "\n"; //
+                //txbLog.Cr
                 Debug.WriteLine(formText);
                 txbLog.AppendText(formText);
                 txbLog.ScrollToEnd();
@@ -182,18 +218,35 @@ namespace CloudStationWPF
         }
 
 
-        ClientConnection client;
+        //ClientConnection client;
         private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            addNewClientConnection(txpIPAddress.Text, int.Parse(txbConnectPort.Text));
+        }
+
+        private void addNewClientConnection(string host, int port)
         {
             ClientConnection client = new ClientConnection();
             client.stringId = client.host + ":" + client.port;
-            this.client = client;
+            //this.client = client;
             client.id = 1;
-            client.host = txpIPAddress.Text;
-            client.port = int.Parse(txbConnectPort.Text);
+            client.host = host;
+            client.port = port;
 
             client.startConnecting();
+            addClient(client);
+        }
+
+        private void addClient(ClientConnection client)
+        {
+            if(clients.ContainsKey(client.stringId))
+            {
+                clients.Remove(client.stringId);
+            }
             clients.Add(client.stringId, client);
+            txbNodeCount.Text = "" + (clients.Count+1);
+
+
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

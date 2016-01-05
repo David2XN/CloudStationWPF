@@ -18,6 +18,7 @@ namespace CloudStationWPF
         public int id;
         public string host = "";
         public int port;
+        public bool onlyConnect = false;
 
         public string stringId = "";
 
@@ -47,14 +48,15 @@ namespace CloudStationWPF
             //            IPAddress remoteHost = new IPAddress(host);
             IPAddress[] remoteHost = Dns.GetHostAddresses(host);
             IPEndPoint remoteEP = new IPEndPoint(remoteHost[0], port);
-            MainWindow.self.writeToLog("Establishing Connection to " + remoteHost[0]);
+            stringId = host + ":" + port;
+            MainWindow.self.writeToLog("Establishing Connection to " + stringId);
 
             // Create a TCP/ IP socket.
             Socket client = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp);
             socket = client;
             //setInfoFromSocket();
-            stringId = host + ":" + port;
+
             // Connect to the remote endpoint.
             client.BeginConnect(remoteEP,
                 new AsyncCallback(ConnectCallback), client);
@@ -70,7 +72,16 @@ namespace CloudStationWPF
                 // Complete the connection.
                 socket.EndConnect(ar);
 
-                MainWindow.self.writeToLog("Socket connected to" + socket.RemoteEndPoint.ToString());
+                if(onlyConnect)
+                {
+                    sendMessage(new MessageLIS('K', MainWindow.self.stringId));
+                }
+                else
+                { 
+                    MainWindow.self.writeToLog("Socket connected to" + socket.RemoteEndPoint.ToString());
+                    MainWindow.self.writeToLog("Sending topology connection request");
+                    sendMessage(new MessageLIS('J', MainWindow.self.stringId));
+                }
             }
             catch (Exception e)
             {
@@ -121,7 +132,7 @@ namespace CloudStationWPF
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
                 }*/
                 string data = Encoding.ASCII.GetString(state.buffer, 0, bytesRead);
-                writeToLog("<<<<<<<<<<<<"+ data);
+                //writeToLog("<<<<<<<<<<<<"+ data);
                 for (int i = 0; i < bytesRead; i++)
                 {
                     parseRecData(state.buffer[i]);
@@ -134,6 +145,7 @@ namespace CloudStationWPF
             }
             catch (Exception e)
             {
+                writeToLog(e.ToString());
                 Console.WriteLine(e.ToString());
             }
         }
@@ -175,11 +187,12 @@ namespace CloudStationWPF
             }
             else
             {
-                message.messageData += (char)symbol;
+                //message.messageData += (char)symbol;
                 message.messageDataOrig[receivedSize] = symbol;
                 receivedSize++;
                 if (receivedSize == expectedSize)
                 {
+                    message.setMessageDataFromOrig();
                     MainWindow.self.receivedMessage(message);
                     state = 0;
                 }
@@ -206,7 +219,7 @@ namespace CloudStationWPF
             // Convert the string data to byte data using ASCII encoding.
             //byte[] byteData = Encoding.ASCII.GetBytes(data);
             byte[] byteData = data;
-            writeToLog(">>>>>>>>>>>>" + data);
+            //writeToLog(">>>>>>>>>>>>" + data);
             // Begin sending the data to the remote device.
             socket.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), socket);
@@ -240,7 +253,7 @@ namespace CloudStationWPF
         public char messageType;
         public int messageLength = 0;
         public string messageData = "";
-        public byte[] messageDataOrig;
+        public byte[] messageDataOrig = null;
 
         public MessageLIS()
         {
@@ -258,6 +271,13 @@ namespace CloudStationWPF
             int totalLength = messageData.Length;// + 2;
 
             byte[] data = Encoding.ASCII.GetBytes(messageData);
+
+            if (messageDataOrig != null)
+            {
+                data = messageDataOrig;
+                totalLength = messageDataOrig.Length;
+            }
+
             byte[] ret = new byte[data.Length + 4];
             ret[0] = (byte)'\\';
             ret[1] = (byte)messageType;
@@ -267,16 +287,27 @@ namespace CloudStationWPF
             return ret;
         }
 
+        public void setMessageDataFromOrig()
+        {
+            try
+            {
+                messageData = Encoding.ASCII.GetString(messageDataOrig, 0, messageDataOrig.Length);
+            }
+            catch(Exception)
+            {
+            }
+        }
+
         public int getLamportCounter()
         {
-            return messageData[0] * 10 + messageData[1];
+            return messageDataOrig[0] * 256 + messageDataOrig[1];
         }
 
         public void setLamportCounter(int value)
         {
-            messageData = "";
-            messageData += (byte)(value / 10);
-            messageData += (byte)(value % 10);
+            messageDataOrig = new byte[2];
+            messageDataOrig[0] = (byte)(value / 256);
+            messageDataOrig[1] = (byte)(value % 256);
         }
     }
 
