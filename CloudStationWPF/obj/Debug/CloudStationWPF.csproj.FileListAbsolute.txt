@@ -1,0 +1,13 @@
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\bin\Debug\CloudStationWPF.exe.config
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\MainWindow.g.cs
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\App.g.cs
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF_MarkupCompile.cache
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF_MarkupCompile.lref
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\bin\Debug\CloudStationWPF.exe
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\bin\Debug\CloudStationWPF.pdb
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\MainWindow.baml
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.g.resources
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.Properties.Resources.resources
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.csproj.GenerateResource.Cache
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.exe
+E:\Documents\CloudStation\Programming\DSV\CloudStationWPF\CloudStationWPF\obj\Debug\CloudStationWPF.pdb
