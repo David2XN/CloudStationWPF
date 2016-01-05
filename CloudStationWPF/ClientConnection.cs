@@ -32,9 +32,17 @@ namespace CloudStationWPF
 
         public Socket socket;
 
+        public void setInfoFromSocket()
+        {
+            IPEndPoint remoteIpEndPoint = socket.RemoteEndPoint as IPEndPoint;
+            host = remoteIpEndPoint.Address.ToString();
+            port = remoteIpEndPoint.Port;
+            stringId = host + ":" + port;
+        }
+
         private void connectClient(string host, int port)
         {
-            stringId = host + ":" + port;
+            //stringId = host + ":" + port;
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
             //            IPAddress remoteHost = new IPAddress(host);
             IPAddress[] remoteHost = Dns.GetHostAddresses(host);
@@ -45,6 +53,8 @@ namespace CloudStationWPF
             Socket client = new Socket(AddressFamily.InterNetwork,
                 SocketType.Stream, ProtocolType.Tcp);
             socket = client;
+            //setInfoFromSocket();
+            stringId = host + ":" + port;
             // Connect to the remote endpoint.
             client.BeginConnect(remoteEP,
                 new AsyncCallback(ConnectCallback), client);
@@ -111,12 +121,13 @@ namespace CloudStationWPF
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
                 }*/
                 string data = Encoding.ASCII.GetString(state.buffer, 0, bytesRead);
+                writeToLog("<<<<<<<<<<<<"+ data);
                 for (int i = 0; i < bytesRead; i++)
                 {
-                    parseRecData(data[i]);
+                    parseRecData(state.buffer[i]);
                 }
 
-                writeToLog("<<<<<<<<<<<<"+ data);
+
                 // Get the rest of the data.
                 client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReceiveCallback), state);
@@ -131,29 +142,42 @@ namespace CloudStationWPF
         int expectedSize = 0;
         int receivedSize = 0;
         MessageLIS message;
-        private void parseRecData(char symbol)
+        private void parseRecData(byte symbol)
         {
             if (state == 0 && symbol == '\\')
             {
-                state = 1;
                 message = new MessageLIS();
                 message.idSource = this.id;
                 message.stringId = this.stringId;
                 receivedSize = 0;
+                state++;
             }
             else if (state == 1)
             {
-                state = 2;
-                expectedSize = symbol;
-                
+                message.messageType = (char)symbol;
+                state++;
             }
             else if (state == 2)
             {
+                expectedSize = symbol;
+                state++;
+            }
+            else if (state == 3)
+            {
                 expectedSize = expectedSize * 256 + symbol;
+                state++;
+                message.messageDataOrig = new byte[expectedSize];
+                if(expectedSize == 0)
+                {
+                    MainWindow.self.receivedMessage(message);
+                    state = 0;
+                }
             }
             else
             {
-                message.messageData += symbol;
+                message.messageData += (char)symbol;
+                message.messageDataOrig[receivedSize] = symbol;
+                receivedSize++;
                 if (receivedSize == expectedSize)
                 {
                     MainWindow.self.receivedMessage(message);
@@ -177,10 +201,11 @@ namespace CloudStationWPF
             Send(message.buildMessage());
         }
 
-        public void Send(String data)
+        public void Send(byte[] data)
         {
             // Convert the string data to byte data using ASCII encoding.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            //byte[] byteData = Encoding.ASCII.GetBytes(data);
+            byte[] byteData = data;
             writeToLog(">>>>>>>>>>>>" + data);
             // Begin sending the data to the remote device.
             socket.BeginSend(byteData, 0, byteData.Length, 0,
@@ -206,4 +231,71 @@ namespace CloudStationWPF
 
 
     }
+
+
+    public class MessageLIS
+    {
+        public int idSource = 0;
+        public string stringId = "";
+        public char messageType;
+        public int messageLength = 0;
+        public string messageData = "";
+        public byte[] messageDataOrig;
+
+        public MessageLIS()
+        {
+
+        }
+
+        public MessageLIS(char messageType, string messageData)
+        {
+            this.messageType = messageType;
+            this.messageData = messageData;
+        }
+
+        public byte[] buildMessage()
+        {
+            int totalLength = messageData.Length;// + 2;
+
+            byte[] data = Encoding.ASCII.GetBytes(messageData);
+            byte[] ret = new byte[data.Length + 4];
+            ret[0] = (byte)'\\';
+            ret[1] = (byte)messageType;
+            ret[2] = (byte)(totalLength / 256);
+            ret[3] = (byte)(totalLength % 256);
+            System.Buffer.BlockCopy(data, 0, ret, 4, data.Length);
+            return ret;
+        }
+
+        public int getLamportCounter()
+        {
+            return messageData[0] * 10 + messageData[1];
+        }
+
+        public void setLamportCounter(int value)
+        {
+            messageData = "";
+            messageData += (byte)(value / 10);
+            messageData += (byte)(value % 10);
+        }
+    }
+
+    public class CriticalRequest
+    {
+        public int counter = 0;
+        public string stringId = "";
+        public bool ackSend = false;
+
+        public CriticalRequest()
+        {
+
+        }
+
+        public CriticalRequest(int counter, string stringId)
+        {
+            this.counter = counter;
+            this.stringId = stringId;
+        }
+    }
+
 }

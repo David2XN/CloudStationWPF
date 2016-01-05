@@ -192,9 +192,8 @@ namespace CloudStationWPF
             client.host = txpIPAddress.Text;
             client.port = int.Parse(txbConnectPort.Text);
 
-            clients.Add(client.stringId, client);
-
             client.startConnecting();
+            clients.Add(client.stringId, client);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

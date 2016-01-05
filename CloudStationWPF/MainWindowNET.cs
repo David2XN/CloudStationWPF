@@ -67,66 +67,12 @@ namespace CloudStationWPF
             Socket handler = listener.EndAccept(ar);
             ClientConnection connection = new ClientConnection();
             connection.socket = handler;
+            connection.setInfoFromSocket();
+            clients.Add(connection.stringId, connection);
             connection.Receive();
 
         }
 
-    }
-
-    public class MessageLIS
-    {
-        public int idSource = 0;
-        public string stringId = "";
-        public char messageType;
-        public int messageLength = 0;
-        public string messageData = "";
-
-        public MessageLIS()
-        {
-
-        }
-
-        public MessageLIS(char messageType, string messageData)
-        {
-            this.messageType = messageType;
-            this.messageData = messageData;
-        }
-
-        public string buildMessage()
-        {
-            int totalLength = messageData.Length;// + 2;
-            return "\\" + (byte)(totalLength / 256) + (byte)(totalLength % 256) + messageType + messageData;
-        }
-
-        public int getLamportCounter()
-        {
-            return messageData[0] * 256 + messageData[1];
-        }
-
-        public void setLamportCounter(int value)
-        {
-            messageData = "";
-            messageData += (byte)(value/256);
-            messageData += (byte)(value%256);
-        }
-    }
-
-    public class CriticalRequest
-    {
-        public int counter = 0;
-        public string stringId = "";
-        public bool ackSend = false;
-
-        public CriticalRequest()
-        {
-
-        }
-
-        public CriticalRequest(int counter, string stringId)
-        {
-            this.counter = counter;
-            this.stringId = stringId;
-        }
     }
 
     public class StateObject
