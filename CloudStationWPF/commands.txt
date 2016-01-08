@@ -1,0 +1,16 @@
+
+Lamport
+A = Ack CS
+F = Release CS
+L = Lamport Request CS
+
+
+Nodes manipulation
+C = Conf recieved
+K = Connect to known node 
+J = Join request
+N = new client to connect
+
+
+Files manipulation
+T = file request

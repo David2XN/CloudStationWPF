@@ -31,6 +31,7 @@
         <Label x:Name="label4_Copy" Content="New Connections" HorizontalAlignment="Left" Margin="294,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.965,0.009" Width="103"/>
         <TextBox x:Name="txpMyIPAddress" HorizontalAlignment="Left" Height="23" Margin="76,41,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label_Copy" Content="My IP" HorizontalAlignment="Left" Margin="2,37,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbTest" HorizontalAlignment="Left" Height="23" Margin="45,100,0,0" TextWrapping="Wrap" Text="Test field" VerticalAlignment="Top" Width="242" IsEnabled="False"/>
 
     </Grid>
 </Window>

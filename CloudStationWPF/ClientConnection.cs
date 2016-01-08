@@ -19,6 +19,7 @@ namespace CloudStationWPF
         public string host = "";
         public int port;
         public bool onlyConnect = false;
+        public bool requestedToJoin = false;
 
         public string stringId = "";
 
@@ -71,6 +72,7 @@ namespace CloudStationWPF
         {
             if (onlyConnect)
             {
+                MainWindow.self.writeToLog("Sending connect only (K) to" + socket.RemoteEndPoint.ToString());
                 sendMessage(new MessageLIS('K', MainWindow.self.stringId));
             }
             else
@@ -307,14 +309,17 @@ namespace CloudStationWPF
 
         public int getLamportCounter()
         {
-            return messageDataOrig[0] * 256 + messageDataOrig[1];
+            return int.Parse(messageData);
+            //return messageDataOrig[0] * 256 + messageDataOrig[1];
         }
 
         public void setLamportCounter(int value)
         {
-            messageDataOrig = new byte[2];
+            messageData = value.ToString();
+            /*messageDataOrig = new byte[2];
             messageDataOrig[0] = (byte)(value / 256);
             messageDataOrig[1] = (byte)(value % 256);
+            */
         }
     }
 

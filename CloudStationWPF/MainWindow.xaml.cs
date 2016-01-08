@@ -42,7 +42,9 @@ namespace CloudStationWPF
         List<CriticalRequest> criticalRequests = new List<CriticalRequest>();
         public string stringId = "";
         private bool inCriticalSection = false;
+        private bool requestToCriticalSectionSend = false;
         private int lamportCounter = 1;
+        private int waitingForConnectionsNumber = 0;
 
         public void sendMessageToAll(MessageLIS message)
         {
@@ -54,6 +56,11 @@ namespace CloudStationWPF
 
         public void accessCriticalSection()
         {
+            if (!(wantsToEnterCriticalSection() && isReady()))
+                return;
+            if (requestToCriticalSectionSend)
+                return;
+            requestToCriticalSectionSend = true;
             writeToLog("I want enter Critical Section");
 
             if(clients.Count == 0)
@@ -75,23 +82,30 @@ namespace CloudStationWPF
             criticalRequests = criticalRequests.OrderBy(c => c.counter).ThenBy(c => c.stringId).ToList();//.ThenBy(c => c.ackSend);
         }
 
+        private void updateGUICounters()
+        {
+            txbNewConnections.Text = "" + clientsToConnect.Count;
+            txbNodeCount.Text = "" + (clients.Count + 1);
+            txbTest.Text = "Wait: " + waitingForConnectionsNumber + ", Req: " + requestToCriticalSectionSend;
+        }
+
         public void enteredCriticalSection()
         {
             writeToLog("Entered Critical Section");
             inCriticalSection = true;
 
-            foreach (var client in clientsToConnect)
+            foreach (var client in clientsToConnect.Where(c => c.Value.requestedToJoin).ToList())
             {
-                writeToLog("Sending ne connection details for "+ client.Value.stringId);
-                sendMessageToAll(new MessageLIS('N', client.Value.stringId));
+                writeToLog("Sending new connection details for "+ client.Value.stringId);
                 client.Value.sendMessage('C', configurationAsString());
+                sendMessageToAll(new MessageLIS('N', client.Value.stringId));
                 addClient(client.Value);
             }
 
-            clientsToConnect.Clear();
-            txbNewConnections.Text = "" + clientsToConnect.Count;
+            //clientsToConnect.Clear();
+            clientsToConnect = clientsToConnect.Where(c => !c.Value.requestedToJoin).ToDictionary(i => i.Key, i => i.Value);
 
-
+            updateGUICounters();
             leaveCriticalSection();
         }
 
@@ -99,6 +113,7 @@ namespace CloudStationWPF
         {
             writeToLog("Leaved Critical Section");
             inCriticalSection = false;
+            requestToCriticalSectionSend = false;
             sendMessageToAll(new MessageLIS('F',""));
         }
 
@@ -107,6 +122,16 @@ namespace CloudStationWPF
             if (!criticalRequests.Any()) //Empty
                 return;
             CriticalRequest request = criticalRequests.ElementAt(0);
+        }
+
+        public bool isReady()
+        {
+            return waitingForConnectionsNumber == 0; // Should not be less than zero
+        }
+
+        public bool wantsToEnterCriticalSection()
+        {
+            return toSendCritical.Count > 0 || clientsToConnect.Where(c => c.Value.requestedToJoin).ToList().Count > 0;
         }
 
         public void receivedMessage(MessageLIS message)
@@ -121,18 +146,29 @@ namespace CloudStationWPF
 
                 if (message.messageType == 'J') // RequestJoin
                 {
-                    writeToLog("New client wants to join");
+                    writeToLog("New client wants to join " + message.messageData);
+                    client.requestedToJoin = true;
                     client.stringId = message.messageData;
-                    accessCriticalSection();
+                }
+                else if (message.messageType == 'K')
+                {
+                    writeToLog("New clients wants to only connect " + message.messageData);
+                    client.stringId = message.messageData;
+                    clientsToConnect.Remove(message.stringId);
+                    addClient(client);
+                    waitingForConnectionsNumber--;
                 }
                 else if (message.messageType == 'C') // Configuration
                 {
                     writeToLog("Recieved configuration");
+                    var configs = message.messageData.Split('|');
+                    lamportCounter = int.Parse(configs[0]);
+                    waitingForConnectionsNumber += configs[1].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Length;
                 }
                 else if (message.messageType == 'N')
                 {
                     var connectionInfo = message.messageData.Split(':');
-                    writeToLog("Connecting to NODE" + message.messageData);
+                    writeToLog("Connecting to NODE " + message.messageData);
                     
                     addNewClientConnection(connectionInfo[0], int.Parse(connectionInfo[1]), true);
                 }
@@ -177,12 +213,16 @@ namespace CloudStationWPF
                 {
                     writeToLog(string.Format("Transfer file requested"));
                 }
+
+                accessCriticalSection();
+                updateGUICounters();
             }));
         }
 
         public String configurationAsString()
         {
             StringBuilder builder = new StringBuilder();
+            builder.Append(lamportCounter.ToString()+"|");
             foreach (var client in clients)
             {
                 builder.Append(client.Key + ";"); 
@@ -251,7 +291,7 @@ namespace CloudStationWPF
                 clients.Remove(client.stringId);
             }
             clients.Add(client.stringId, client);
-            txbNodeCount.Text = "" + (clients.Count+1);
+            updateGUICounters();
 
 
         }
