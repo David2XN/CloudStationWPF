@@ -14,7 +14,7 @@ namespace CloudStationWPF
     internal class ClientConnection
     {
 
-        public bool ackCriticalSection = false;
+        public bool ackCriticalSection = true;
         public int id;
         public string host = "";
         public int port;

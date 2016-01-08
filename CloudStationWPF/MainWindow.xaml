@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CloudStationWPF"
         mc:Ignorable="d"
-        Title="CloudStation" Height="350" Width="525" ContentRendered="Window_ContentRendered">
+        Title="CloudStation" Height="403.456" Width="769.24" ContentRendered="Window_ContentRendered">
     <Grid>
         <TextBox x:Name="txpIPAddress" HorizontalAlignment="Left" Height="23" Margin="76,10,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label" Content="Connect To" HorizontalAlignment="Left" Margin="2,6,0,0" VerticalAlignment="Top"/>
@@ -15,7 +15,7 @@
         <TextBox x:Name="txbServerPort" HorizontalAlignment="Left" Height="23" Margin="261,41,0,0" TextWrapping="Wrap" Text="4220" VerticalAlignment="Top" Width="71"/>
         <Button x:Name="btnServer" Content="Launch Server" HorizontalAlignment="Left" Margin="365,40,0,0" VerticalAlignment="Top" Width="133" Click="btnServer_Click"/>
         <Button x:Name="btnStart" Content="Connect" HorizontalAlignment="Left" Margin="365,9,0,0" VerticalAlignment="Top" Width="133" Click="btnStart_Click"/>
-        <RichTextBox x:Name="txbLog" Margin="20,127,20.667,20.667">
+        <RichTextBox x:Name="txbLog" Margin="261,145,20.667,20.667">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
@@ -23,7 +23,7 @@
             </RichTextBox.Resources>
             <FlowDocument/>
         </RichTextBox>
-        <Label x:Name="label3" Content="Log" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label3" Content="Log" HorizontalAlignment="Left" Margin="264,119,0,0" VerticalAlignment="Top"/>
         <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" IsEnabled="False"/>
         <TextBox x:Name="txbNodeCount" HorizontalAlignment="Left" Height="23" Margin="472,99,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" IsEnabled="False"/>
         <Label x:Name="label4" Content="Nodes" HorizontalAlignment="Left" Margin="423,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.965,0.009"/>
@@ -33,6 +33,14 @@
         <Label x:Name="label_Copy" Content="My IP" HorizontalAlignment="Left" Margin="2,37,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txbTest" HorizontalAlignment="Left" Height="23" Margin="45,100,0,0" TextWrapping="Wrap" Text="Test field" VerticalAlignment="Top" Width="242" IsEnabled="False"/>
         <Button x:Name="btnDisconnect" Content="Disconnect" HorizontalAlignment="Left" Margin="423,65,0,0" VerticalAlignment="Top" Width="75" Click="btnDisconnect_Click"/>
+        <RichTextBox x:Name="txbClients" Margin="11,145,0,20.667" HorizontalAlignment="Left" Width="237">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+            <FlowDocument/>
+        </RichTextBox>
 
     </Grid>
 </Window>

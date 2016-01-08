@@ -70,18 +70,27 @@ namespace CloudStationWPF
                 writeToLog("Entering critical section because no nodes to notify");
                 enteredCriticalSection();
             }
+
+            foreach (var client in clients)
+            {
+                client.Value.ackCriticalSection = false;
+            }
+
             CriticalRequest newRequest = new CriticalRequest(++lamportCounter, stringId);
+            newRequest.ackSend = true;
             addRequestToQueue(newRequest);
             MessageLIS message = new MessageLIS('L', "");
             message.setLamportCounter(lamportCounter);
             sendMessageToAll(message);
+
+            
         }
 
         private void addRequestToQueue(CriticalRequest request)
         {
-            writeToLog("Added new CriticalRequest to queue");
+            writeToLog("Added new CriticalRequest to queue " + request.stringId + " " + "(" + request.counter + ")");
             criticalRequests.Add(request);
-            criticalRequests = criticalRequests.OrderBy(c => c.counter).ThenBy(c => c.stringId).ToList();//.ThenBy(c => c.ackSend);
+            criticalRequests = criticalRequests.OrderByDescending(c => c.counter).ThenBy(c => c.stringId).ToList();//.ThenBy(c => c.ackSend);
         }
 
         private void updateGUICounters()
@@ -89,6 +98,14 @@ namespace CloudStationWPF
             txbNewConnections.Text = "" + clientsToConnect.Count;
             txbNodeCount.Text = "" + (clients.Count + 1);
             txbTest.Text = "Wait: " + waitingForConnectionsNumber + ", Req: " + requestToCriticalSectionSend;
+            txbClients.Document.Blocks.Clear();
+            var clientBuilder = new StringBuilder();
+            clientBuilder.Append(stringId + " (me)" + Environment.NewLine);
+            foreach (var item in clients)
+            {
+                clientBuilder.Append(String.Format("{0} " + Environment.NewLine, item.Value.stringId));
+            }
+            txbClients.AppendText(clientBuilder.ToString());
         }
 
         public void enteredCriticalSection()
@@ -113,7 +130,7 @@ namespace CloudStationWPF
 
         public void leaveCriticalSection()
         {
-            writeToLog("Leaved Critical Section");
+            writeToLog("CS Leaved by me");
             inCriticalSection = false;
             requestToCriticalSectionSend = false;
             sendMessageToAll(new MessageLIS('F',""));
@@ -124,6 +141,16 @@ namespace CloudStationWPF
             if (!criticalRequests.Any()) //Empty
                 return;
             CriticalRequest request = criticalRequests.ElementAt(0);
+
+            if (request.ackSend == false) // Should be received message
+            {
+                writeToLog(string.Format("CS Access granted from me to node {0} ({1}) ", request.stringId, request.counter));
+                request.ackSend = true;
+                clients[request.stringId].sendMessage(new MessageLIS('A', "")); //Acknowledge CS
+            }
+
+
+
         }
 
         public bool isReady()
@@ -164,7 +191,7 @@ namespace CloudStationWPF
                     client = clientsToConnect[message.stringId];
                 else
                 {
-                    writeToLog("Recieved message from unknown node !!!");
+                    writeToLog("Recieved message from unknown node !!!" + message.stringId);
                     return;
                 }
 
@@ -184,7 +211,7 @@ namespace CloudStationWPF
                 }
                 else if (message.messageType == 'C') // Configuration
                 {
-                    writeToLog("Recieved configuration");
+                    writeToLog("Recieved configuration - "+ message.messageData);
                     var configs = message.messageData.Split('|');
                     lamportCounter = int.Parse(configs[0]);
                     waitingForConnectionsNumber += configs[1].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Length;
@@ -203,30 +230,20 @@ namespace CloudStationWPF
                 }
                 else if (message.messageType == 'L') // Lamport Request CS
                 {
-                    writeToLog(string.Format("{0} ({1}) CS Requested", message.stringId, message.getLamportCounter()));
+                    writeToLog(string.Format("CS Requested {0} ({1})", message.stringId, message.getLamportCounter()));
                     CriticalRequest newRequest = new CriticalRequest(message.getLamportCounter(), message.stringId);
                     addRequestToQueue(newRequest);
                     lamportCounter = Math.Max(lamportCounter, message.getLamportCounter());
-
-                    if (inCriticalSection)
-                        return;
-
-
-                    if (criticalRequests.ElementAt(0).ackSend == false) // Should be received message
-                    {
-                        writeToLog(string.Format("{0} ({1}) CS Access granted to node", message.stringId, message.getLamportCounter()));
-                        client.sendMessage(new MessageLIS('A', "")); //Acknowledge CS
-                    }
                 }
                 else if (message.messageType == 'A') // Acknowledged CS
                 {
-                    writeToLog(string.Format("{0} CS Access granted to me", message.stringId));
+                    writeToLog(string.Format("CS Access granted to me from {0}", message.stringId));
                     client.ackCriticalSection = true;
                     //criticalRequests.Find()
                 }
                 else if (message.messageType == 'F') // Release CS
                 {
-                    writeToLog(string.Format("{0} CS Released", message.stringId));
+                    writeToLog(string.Format("CS Released {0} ", message.stringId));
                     int requestIndex = criticalRequests.FindIndex(c => c.stringId == message.stringId);
                     if(requestIndex >= 0)
                     {
@@ -246,11 +263,12 @@ namespace CloudStationWPF
 
         private void checkActions()
         {
-            if (clients.All(c => c.Value.ackCriticalSection))
+            if (requestToCriticalSectionSend && clients.All(c => c.Value.ackCriticalSection))
             {
                 enteredCriticalSection();
             }
             accessCriticalSection();
+            sendACKToNextNode();
             updateGUICounters();
         }
 
@@ -328,7 +346,7 @@ namespace CloudStationWPF
             if (text == null)
                 return;
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
-                string formText = DateTime.Now.ToString() + ":" + text + "\n"; //
+                string formText = DateTime.Now.ToString("HH:mm:ss.fff") + ":" + text + "\n"; //
                 //txbLog.Cr
                 Debug.WriteLine(formText);
                 txbLog.AppendText(formText);
@@ -377,6 +395,7 @@ namespace CloudStationWPF
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
+            txbLog.AppendText(Environment.NewLine);
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length == 1)
                 return;
