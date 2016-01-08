@@ -82,7 +82,8 @@ namespace CloudStationWPF
 
             foreach (var client in clientsToConnect)
             {
-                sendMessageToAll(new MessageLIS('N', client.Key));
+                writeToLog("Sending ne connection details for "+ client.Value.stringId);
+                sendMessageToAll(new MessageLIS('N', client.Value.stringId));
                 client.Value.sendMessage('C', configurationAsString());
                 addClient(client.Value);
             }
@@ -121,6 +122,7 @@ namespace CloudStationWPF
                 if (message.messageType == 'J') // RequestJoin
                 {
                     writeToLog("New client wants to join");
+                    client.stringId = message.messageData;
                     accessCriticalSection();
                 }
                 else if (message.messageType == 'C') // Configuration
@@ -130,7 +132,9 @@ namespace CloudStationWPF
                 else if (message.messageType == 'N')
                 {
                     var connectionInfo = message.messageData.Split(':');
-                    addNewClientConnection(connectionInfo[0], int.Parse(connectionInfo[1]));
+                    writeToLog("Connecting to NODE" + message.messageData);
+                    
+                    addNewClientConnection(connectionInfo[0], int.Parse(connectionInfo[1]), true);
                 }
                 else if (message.messageType == 'L') // Lamport Request CS
                 {
@@ -207,6 +211,8 @@ namespace CloudStationWPF
 
         public void writeToLog(string text)
         {
+            if (text == null)
+                return;
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
                 string formText = DateTime.Now.ToString() + ":" + text + "\n"; //
                 //txbLog.Cr
@@ -224,7 +230,7 @@ namespace CloudStationWPF
             addNewClientConnection(txpIPAddress.Text, int.Parse(txbConnectPort.Text));
         }
 
-        private void addNewClientConnection(string host, int port)
+        private void addNewClientConnection(string host, int port, bool onlyConnect = false)
         {
             ClientConnection client = new ClientConnection();
             client.stringId = client.host + ":" + client.port;
@@ -232,6 +238,7 @@ namespace CloudStationWPF
             client.id = 1;
             client.host = host;
             client.port = port;
+            client.onlyConnect = onlyConnect;
 
             client.startConnecting();
             addClient(client);

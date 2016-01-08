@@ -58,11 +58,27 @@ namespace CloudStationWPF
             //setInfoFromSocket();
 
             // Connect to the remote endpoint.
-            client.BeginConnect(remoteEP,
-                new AsyncCallback(ConnectCallback), client);
+            client.Connect(remoteEP);
+            afterConnect();
+            //client.BeginConnect(remoteEP,
+            //    new AsyncCallback(ConnectCallback), client);
 
             //Send("This is a test");
             Receive();
+        }
+
+        private void afterConnect()
+        {
+            if (onlyConnect)
+            {
+                sendMessage(new MessageLIS('K', MainWindow.self.stringId));
+            }
+            else
+            {
+                MainWindow.self.writeToLog("Socket connected to" + socket.RemoteEndPoint.ToString());
+                MainWindow.self.writeToLog("Sending topology connection request");
+                sendMessage(new MessageLIS('J', MainWindow.self.stringId));
+            }
         }
 
         private void ConnectCallback(IAsyncResult ar)
@@ -71,17 +87,8 @@ namespace CloudStationWPF
             {
                 // Complete the connection.
                 socket.EndConnect(ar);
+                afterConnect();
 
-                if(onlyConnect)
-                {
-                    sendMessage(new MessageLIS('K', MainWindow.self.stringId));
-                }
-                else
-                { 
-                    MainWindow.self.writeToLog("Socket connected to" + socket.RemoteEndPoint.ToString());
-                    MainWindow.self.writeToLog("Sending topology connection request");
-                    sendMessage(new MessageLIS('J', MainWindow.self.stringId));
-                }
             }
             catch (Exception e)
             {
