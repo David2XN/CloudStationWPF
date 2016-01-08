@@ -133,6 +133,7 @@ namespace CloudStationWPF
             writeToLog("CS Leaved by me");
             inCriticalSection = false;
             requestToCriticalSectionSend = false;
+            criticalRequests.RemoveAll(c => c.stringId == stringId);
             sendMessageToAll(new MessageLIS('F',""));
         }
 
@@ -244,11 +245,12 @@ namespace CloudStationWPF
                 else if (message.messageType == 'F') // Release CS
                 {
                     writeToLog(string.Format("CS Released {0} ", message.stringId));
-                    int requestIndex = criticalRequests.FindIndex(c => c.stringId == message.stringId);
+                    criticalRequests.RemoveAll(c => c.stringId == message.stringId);
+                    /*int requestIndex = criticalRequests.FindIndex(c => c.stringId == message.stringId);
                     if(requestIndex >= 0)
                     {
                         criticalRequests.RemoveAt(requestIndex);
-                    }
+                    }*/
                     
                 }
                 else if (message.messageType == 'T') // Transfer File (Text Only)
