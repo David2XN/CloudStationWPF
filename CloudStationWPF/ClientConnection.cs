@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace CloudStationWPF
 {
-    class ClientConnection
+    internal class ClientConnection
     {
 
         public bool ackCriticalSection = false;
@@ -155,6 +155,7 @@ namespace CloudStationWPF
             catch (Exception e)
             {
                 writeToLog(e.ToString());
+                MainWindow.self.handleClientException(this, e);
                 Console.WriteLine(e.ToString());
             }
         }
@@ -247,7 +248,8 @@ namespace CloudStationWPF
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.ToString());
+                MainWindow.self.handleClientException(this, e);
+                Console.WriteLine(e.ToString());
             }
         }
 

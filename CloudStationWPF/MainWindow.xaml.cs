@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Sockets;
+using System.Net;
 
 namespace CloudStationWPF
 {
@@ -134,6 +136,23 @@ namespace CloudStationWPF
             return toSendCritical.Count > 0 || clientsToConnect.Where(c => c.Value.requestedToJoin).ToList().Count > 0;
         }
 
+        /*
+            Lamport
+            A = Ack CS
+            F = Release CS
+            L = Lamport Request CS
+
+
+            Nodes manipulation
+            C = Conf recieved
+            D = Remove node
+            K = Connect to known node 
+            J = Join request
+            N = new client to connect
+
+            Files manipulation
+            T = file request
+         */
         public void receivedMessage(MessageLIS message)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
@@ -141,8 +160,13 @@ namespace CloudStationWPF
                 ClientConnection client;
                 if (clients.ContainsKey(message.stringId))
                     client = clients[message.stringId];
-                else
+                else if (clientsToConnect.ContainsKey(message.stringId))
                     client = clientsToConnect[message.stringId];
+                else
+                {
+                    writeToLog("Recieved message from unknown node !!!");
+                    return;
+                }
 
                 if (message.messageType == 'J') // RequestJoin
                 {
@@ -165,12 +189,17 @@ namespace CloudStationWPF
                     lamportCounter = int.Parse(configs[0]);
                     waitingForConnectionsNumber += configs[1].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Length;
                 }
-                else if (message.messageType == 'N')
+                else if (message.messageType == 'N') // New client to connect
                 {
                     var connectionInfo = message.messageData.Split(':');
                     writeToLog("Connecting to NODE " + message.messageData);
                     
                     addNewClientConnection(connectionInfo[0], int.Parse(connectionInfo[1]), true);
+                }
+                else if (message.messageType == 'D')
+                {
+                    writeToLog("Removing NODE (D) " + message.messageData);
+                    removeClient(message.messageData);
                 }
                 else if (message.messageType == 'L') // Lamport Request CS
                 {
@@ -193,10 +222,6 @@ namespace CloudStationWPF
                 {
                     writeToLog(string.Format("{0} CS Access granted to me", message.stringId));
                     client.ackCriticalSection = true;
-                    if (clients.All(c => c.Value.ackCriticalSection))
-                    {
-                        enteredCriticalSection();
-                    }
                     //criticalRequests.Find()
                 }
                 else if (message.messageType == 'F') // Release CS
@@ -214,9 +239,58 @@ namespace CloudStationWPF
                     writeToLog(string.Format("Transfer file requested"));
                 }
 
-                accessCriticalSection();
-                updateGUICounters();
+
+                checkActions();
             }));
+        }
+
+        private void checkActions()
+        {
+            if (clients.All(c => c.Value.ackCriticalSection))
+            {
+                enteredCriticalSection();
+            }
+            accessCriticalSection();
+            updateGUICounters();
+        }
+
+        internal void handleClientException(ClientConnection client, Exception ex)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
+                if (ex is SocketException || ex is ObjectDisposedException)
+                {
+                    disconnectClient(client, true);
+                    checkActions();
+                }
+            }));
+        }
+
+        private void removeClient(string stringId)
+        {
+            if(clients.ContainsKey(stringId))
+            {
+                var client = clients[stringId];
+                try
+                {
+                    client.socket.Close();
+                }
+                catch(Exception)
+                {
+
+                }
+                
+            }
+            clients.Remove(stringId);
+            criticalRequests.RemoveAll(c => c.stringId == stringId);
+        }
+
+        private void disconnectClient(ClientConnection client, bool notifyOthers = false)
+        {
+            removeClient(client.stringId);
+            if (notifyOthers)
+            {
+                sendMessageToAll(new MessageLIS('D', client.stringId));
+            }
         }
 
         public String configurationAsString()
@@ -319,6 +393,39 @@ namespace CloudStationWPF
                 Thread.Sleep(int.Parse(args[5])*1000);
                 btnStart_Click(null, null);
             }
+        }
+
+        private void reinit()
+        {
+            clients.Clear();
+            clientsToConnect.Clear();
+            toSendCritical.Clear();
+            criticalRequests.Clear();
+            inCriticalSection = false;
+            requestToCriticalSectionSend = false;
+            lamportCounter = 1;
+            waitingForConnectionsNumber = 0;
+    }
+
+        private void btnDisconnect_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                server.Abort();
+            }
+            catch (Exception ex)
+            {
+                writeToLog(ex.ToString());
+            }
+            try
+            {
+                sendMessageToAll(new MessageLIS('D', stringId));
+            }
+            catch (Exception ex)
+            {
+                writeToLog(ex.ToString());
+            }
+            reinit();
         }
     }
 }

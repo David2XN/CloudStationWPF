@@ -54,6 +54,7 @@ namespace CloudStationWPF
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
+                writeToLog(e.ToString());
             }
         }
 
