@@ -17,6 +17,12 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 
+// To-do
+// File comparition
+// Server Lauch ip
+// Folder field GUI
+// Log to file
+// Init file send
 
 namespace CloudStationWPF
 {
@@ -526,7 +532,7 @@ namespace CloudStationWPF
         {
             // Specify what is done when a file is changed, created, or deleted.
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
-                writeToLog("Added task file: " + e.Name + " " + e.ChangeType);
+                Debug.WriteLine("Added task file: " + e.Name + " " + e.ChangeType);
                 writeToLog("Added task file: " + e.Name + " " + e.ChangeType);
                 addFileTask(new FileTask(e.Name));
                 accessCriticalSection();
