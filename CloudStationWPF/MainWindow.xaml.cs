@@ -13,9 +13,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Net.Sockets;
 using System.Net;
+using System.IO;
+
 
 namespace CloudStationWPF
 {
@@ -25,7 +26,8 @@ namespace CloudStationWPF
     public partial class MainWindow : Window
     {
         Thread server;
-        string folder = "data0";
+        string folder = "datax";
+        string folderPath = "";
         public static MainWindow self;
         public MainWindow()
         {
@@ -39,7 +41,7 @@ namespace CloudStationWPF
 
         Dictionary<string, ClientConnection> clientsToConnect = new Dictionary<string, ClientConnection>();
 
-        List<MessageLIS> toSendCritical = new List<MessageLIS>();
+        List<FileTask> toSendCritical = new List<FileTask>();
 
         List<CriticalRequest> criticalRequests = new List<CriticalRequest>();
         public string stringId = "";
@@ -69,6 +71,7 @@ namespace CloudStationWPF
             {
                 writeToLog("Entering critical section because no nodes to notify");
                 enteredCriticalSection();
+                return;
             }
 
             foreach (var client in clients)
@@ -116,13 +119,28 @@ namespace CloudStationWPF
             foreach (var client in clientsToConnect.Where(c => c.Value.requestedToJoin).ToList())
             {
                 writeToLog("Sending new connection details for "+ client.Value.stringId);
+                /*foreach (string file in Directory.EnumerateFiles(folderPath))
+                {
+                    string contents = File.ReadAllText(file);
+                }*/
+
                 client.Value.sendMessage('C', configurationAsString());
                 sendMessageToAll(new MessageLIS('N', client.Value.stringId));
                 addClient(client.Value);
             }
-
-            //clientsToConnect.Clear();
             clientsToConnect = clientsToConnect.Where(c => !c.Value.requestedToJoin).ToDictionary(i => i.Key, i => i.Value);
+            //clientsToConnect.Clear();
+
+            foreach (var file in toSendCritical)
+            {
+                var path = Path.Combine(folderPath, file.fileName);
+                writeToLog("Sending file " + path);
+                sendMessageToAll(new MessageLIS('T', file.fileName + "|" + File.ReadAllText(path)));
+            }
+            toSendCritical.Clear();
+
+
+
 
             updateGUICounters();
             leaveCriticalSection();
@@ -149,9 +167,6 @@ namespace CloudStationWPF
                 request.ackSend = true;
                 clients[request.stringId].sendMessage(new MessageLIS('A', "")); //Acknowledge CS
             }
-
-
-
         }
 
         public bool isReady()
@@ -256,6 +271,9 @@ namespace CloudStationWPF
                 else if (message.messageType == 'T') // Transfer File (Text Only)
                 {
                     writeToLog(string.Format("Transfer file requested"));
+                    string[] conf = message.messageData.Split(new char[] { '|' }, 2);
+                    var path = Path.Combine(folderPath, conf[0]);
+                    File.WriteAllText(path, conf[1]);
                 }
 
 
@@ -329,6 +347,13 @@ namespace CloudStationWPF
         volatile string connectIP = "";
         private void btnServer_Click(object sender, RoutedEventArgs e)
         {
+            string currentPath = Directory.GetCurrentDirectory();
+            folderPath = Path.Combine(currentPath, folder);
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            CreateFileWatcher(folderPath);
+
             runningPort = int.Parse(txbServerPort.Text);
             stringId = txpMyIPAddress.Text + ":" + runningPort;
             if (server != null)
@@ -448,5 +473,63 @@ namespace CloudStationWPF
             }
             reinit();
         }
+
+
+
+        // File Watcher
+        FileSystemWatcher watcher;
+        public void CreateFileWatcher(string path)
+        {
+            // Create a new FileSystemWatcher and set its properties.
+            watcher = new FileSystemWatcher();
+            watcher.Path = path;
+            /* Watch for changes in LastAccess and LastWrite times, and 
+               the renaming of files or directories. */
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+       | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            // Only watch text files.
+            //watcher.Filter = "*.txt";
+
+            // Add event handlers.
+            watcher.Created += new FileSystemEventHandler(OnChanged);
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.Deleted += new FileSystemEventHandler(OnChanged);
+            watcher.Renamed += new RenamedEventHandler(OnRenamed);
+
+            // Begin watching.
+            watcher.EnableRaisingEvents = true;
+
+        }
+
+        private void addFileTask(FileTask task)
+        {
+            toSendCritical.RemoveAll(c => c.fileName == task.fileName);
+            toSendCritical.Add(task);
+        }
+
+        // Define the event handlers.
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+            // Specify what is done when a file is changed, created, or deleted.
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
+                writeToLog("Added task file: " + e.Name + " " + e.ChangeType);
+                writeToLog("Added task file: " + e.Name + " " + e.ChangeType);
+                addFileTask(new FileTask(e.Name));
+                accessCriticalSection();
+            }));
+        }
+
+        private void OnRenamed(object source, RenamedEventArgs e)
+        {
+            // Specify what is done when a file is renamed.
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
+                Debug.WriteLine("Added two tasks, file: {0} renamed to {1}", e.OldName, e.Name);
+                writeToLog(String.Format("Added two tasks, file: {0} renamed to {1}", e.OldName, e.Name));
+                addFileTask(new FileTask(e.OldName));
+                addFileTask(new FileTask(e.Name));
+                accessCriticalSection();
+            }));
+        }
+
     }
 }

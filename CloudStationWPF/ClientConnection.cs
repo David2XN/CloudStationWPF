@@ -325,6 +325,8 @@ namespace CloudStationWPF
         }
     }
 
+
+
     public class CriticalRequest
     {
         public int counter = 0;
@@ -340,6 +342,25 @@ namespace CloudStationWPF
         {
             this.counter = counter;
             this.stringId = stringId;
+        }
+    }
+
+    public class FileTask
+    {
+        public string fileName = "";
+        public string fileOwner = "";
+        public string fileData = "";
+
+        public bool fileRemove = false;
+
+        public FileTask()
+        {
+
+        }
+
+        public FileTask(string fileName)
+        {
+            this.fileName = fileName;
         }
     }
 
