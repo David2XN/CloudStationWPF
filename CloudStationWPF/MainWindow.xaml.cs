@@ -134,8 +134,12 @@ namespace CloudStationWPF
             foreach (var file in toSendCritical)
             {
                 var path = Path.Combine(folderPath, file.fileName);
-                writeToLog("Sending file " + path);
-                sendMessageToAll(new MessageLIS('T', file.fileName + "|" + File.ReadAllText(path)));
+                writeToLog("Sending file " + path);//fileMode
+                var fileData = "";
+                if (file.fileMode != 'D')
+                    fileData = File.ReadAllText(path);
+                var data = String.Format("{0}|{1}|{2}", file.fileMode, file.fileName, fileData);
+                sendMessageToAll(new MessageLIS('T', data));
             }
             toSendCritical.Clear();
 
@@ -270,10 +274,20 @@ namespace CloudStationWPF
                 }
                 else if (message.messageType == 'T') // Transfer File (Text Only)
                 {
-                    writeToLog(string.Format("Transfer file requested"));
-                    string[] conf = message.messageData.Split(new char[] { '|' }, 2);
-                    var path = Path.Combine(folderPath, conf[0]);
-                    File.WriteAllText(path, conf[1]);
+                    writeToLog(string.Format("File recieved " + message.messageData));
+                    string[] conf = message.messageData.Split(new char[] { '|' }, 3);
+                    var path = Path.Combine(folderPath, conf[1]);
+                    if (conf[0] == "D")
+                    {
+                        //Delete file
+                    }
+                    else
+                    {
+                        watcher.EnableRaisingEvents = false;
+                        File.WriteAllText(path, conf[2]);
+                        watcher.EnableRaisingEvents = true;
+                    }
+
                 }
 
 
@@ -525,7 +539,9 @@ namespace CloudStationWPF
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
                 Debug.WriteLine("Added two tasks, file: {0} renamed to {1}", e.OldName, e.Name);
                 writeToLog(String.Format("Added two tasks, file: {0} renamed to {1}", e.OldName, e.Name));
-                addFileTask(new FileTask(e.OldName));
+                var toDelete = new FileTask(e.OldName);
+                toDelete.fileMode = 'D';
+                addFileTask(toDelete);
                 addFileTask(new FileTask(e.Name));
                 accessCriticalSection();
             }));

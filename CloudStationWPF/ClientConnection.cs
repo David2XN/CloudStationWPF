@@ -351,7 +351,7 @@ namespace CloudStationWPF
         public string fileOwner = "";
         public string fileData = "";
 
-        public bool fileRemove = false;
+        public char fileMode = 'M';
 
         public FileTask()
         {
