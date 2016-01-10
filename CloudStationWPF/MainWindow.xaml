@@ -24,7 +24,7 @@
             <FlowDocument/>
         </RichTextBox>
         <Label x:Name="label3" Content="Log" HorizontalAlignment="Left" Margin="264,119,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" IsEnabled="False"/>
+        <Button x:Name="button" Content="Test" HorizontalAlignment="Left" Margin="343,65,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" IsEnabled="False"/>
         <TextBox x:Name="txbNodeCount" HorizontalAlignment="Left" Height="23" Margin="472,99,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" IsEnabled="False"/>
         <Label x:Name="label4" Content="Nodes" HorizontalAlignment="Left" Margin="423,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.965,0.009"/>
         <TextBox x:Name="txbNewConnections" HorizontalAlignment="Left" Height="23" Margin="397,100,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" IsEnabled="False"/>
@@ -41,6 +41,7 @@
             </RichTextBox.Resources>
             <FlowDocument/>
         </RichTextBox>
+        <TextBox x:Name="txbfolderName" HorizontalAlignment="Left" Height="23" Margin="76,69,0,0" TextWrapping="Wrap" Text="datax" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

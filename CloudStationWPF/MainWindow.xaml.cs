@@ -19,10 +19,6 @@ using System.IO;
 
 // To-do
 // File comparition
-// Server Lauch ip
-// Folder field GUI
-// Log to file
-// Init file send
 
 namespace CloudStationWPF
 {
@@ -33,6 +29,7 @@ namespace CloudStationWPF
     {
         Thread server;
         string folder = "datax";
+        public static string myExtension = "LISworking";
         string folderPath = "";
         public static MainWindow self;
         public MainWindow()
@@ -125,10 +122,14 @@ namespace CloudStationWPF
             foreach (var client in clientsToConnect.Where(c => c.Value.requestedToJoin).ToList())
             {
                 writeToLog("Sending new connection details for "+ client.Value.stringId);
-                /*foreach (string file in Directory.EnumerateFiles(folderPath))
+                foreach (string file in Directory.EnumerateFiles(folderPath))
                 {
+                    writeToLog("Sending init file " + file);//fileMode
                     string contents = File.ReadAllText(file);
-                }*/
+                    string name = Path.GetFileName(file);
+                    var data = String.Format("{0}|{1}|{2}", 'M', name, contents);
+                    client.Value.sendMessage('T', data);
+                }
 
                 client.Value.sendMessage('C', configurationAsString());
                 sendMessageToAll(new MessageLIS('N', client.Value.stringId));
@@ -283,15 +284,25 @@ namespace CloudStationWPF
                     writeToLog(string.Format("File recieved " + message.messageData));
                     string[] conf = message.messageData.Split(new char[] { '|' }, 3);
                     var path = Path.Combine(folderPath, conf[1]);
-                    if (conf[0] == "D")
+                    try
                     {
-                        //Delete file
+                        if (conf[0] == "D")
+                        {
+                            //Delete file
+                            File.Move(path, path + myExtension);
+                            File.Delete(path + myExtension);
+                        }
+                        else
+                        {
+                            //watcher.EnableRaisingEvents = false;
+                            File.WriteAllText(path+myExtension, conf[2]);
+                            File.Move(path + myExtension, path);
+                            //watcher.EnableRaisingEvents = true;
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        watcher.EnableRaisingEvents = false;
-                        File.WriteAllText(path, conf[2]);
-                        watcher.EnableRaisingEvents = true;
+                        writeToLog(ex.ToString());
                     }
 
                 }
@@ -367,6 +378,7 @@ namespace CloudStationWPF
         volatile string connectIP = "";
         private void btnServer_Click(object sender, RoutedEventArgs e)
         {
+            folder = txbfolderName.Text;
             string currentPath = Directory.GetCurrentDirectory();
             folderPath = Path.Combine(currentPath, folder);
             if (!Directory.Exists(folderPath))
@@ -376,6 +388,7 @@ namespace CloudStationWPF
 
             runningPort = int.Parse(txbServerPort.Text);
             stringId = txpMyIPAddress.Text + ":" + runningPort;
+            logPath = Path.Combine(Directory.GetCurrentDirectory(), stringId.Replace(':','.') + ".txt");
             if (server != null)
                 server.Abort();
 
@@ -388,6 +401,7 @@ namespace CloudStationWPF
             server.Start();
         }
 
+        string logPath = "";
         public void writeToLog(string text)
         {
             if (text == null)
@@ -398,6 +412,8 @@ namespace CloudStationWPF
                 Debug.WriteLine(formText);
                 txbLog.AppendText(formText);
                 txbLog.ScrollToEnd();
+
+                File.AppendAllText(logPath, formText);
             }));
 
         }
@@ -448,15 +464,18 @@ namespace CloudStationWPF
                 return;
             if (args.Length >= 3)
             {
-                folder = args[1];
-                txbServerPort.Text = args[2];
+                txbfolderName.Text = args[1];
+                var locDetails = args[2].Split(':');
+                txpMyIPAddress.Text = locDetails[0];
+                txbServerPort.Text = locDetails[1];
                 btnServer_Click(null, null);
             }
-            if (args.Length >= 6)
+            if (args.Length >= 5)
             {
-                txpIPAddress.Text = args[3];
-                txbConnectPort.Text = args[4];
-                Thread.Sleep(int.Parse(args[5])*1000);
+                var remoteDetails = args[3].Split(':');
+                txpIPAddress.Text = remoteDetails[0];
+                txbConnectPort.Text = remoteDetails[1];
+                Thread.Sleep(int.Parse(args[4])*1000);
                 btnStart_Click(null, null);
             }
         }
@@ -532,9 +551,14 @@ namespace CloudStationWPF
         {
             // Specify what is done when a file is changed, created, or deleted.
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
+                if (Path.GetExtension(e.FullPath) == myExtension)
+                    return;
                 Debug.WriteLine("Added task file: " + e.Name + " " + e.ChangeType);
                 writeToLog("Added task file: " + e.Name + " " + e.ChangeType);
-                addFileTask(new FileTask(e.Name));
+                var filetask = new FileTask(e.Name);
+                if (e.ChangeType == WatcherChangeTypes.Deleted)
+                    filetask.fileMode = 'D';
+                addFileTask(filetask);
                 accessCriticalSection();
             }));
         }
@@ -543,6 +567,9 @@ namespace CloudStationWPF
         {
             // Specify what is done when a file is renamed.
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => {
+                if (Path.GetExtension(e.OldFullPath) == myExtension || Path.GetExtension(e.FullPath) == myExtension)
+                    return;
+
                 Debug.WriteLine("Added two tasks, file: {0} renamed to {1}", e.OldName, e.Name);
                 writeToLog(String.Format("Added two tasks, file: {0} renamed to {1}", e.OldName, e.Name));
                 var toDelete = new FileTask(e.OldName);

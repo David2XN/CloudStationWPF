@@ -1,0 +1,98 @@
+01:20:15.773:Establishing Connection to 127.0.0.1:4221
+01:20:15.782:Socket connected to127.0.0.1:4221
+01:20:15.789:Sending topology connection request
+01:20:15.800:Waiting for a connection...
+01:20:15.873:Recieved configuration - 2|127.0.0.1:4220;
+01:20:15.888:CS Released 127.0.0.1:4221 
+01:20:15.899:Waiting for a connection...
+01:20:15.916:New clients wants to only connect 127.0.0.1:4220
+01:20:15.995:CS Requested 127.0.0.1:4220 (3)
+01:20:16.009:Added new CriticalRequest to queue 127.0.0.1:4220 (3)
+01:20:16.024:CS Access granted from me to node 127.0.0.1:4220 (3) 
+01:20:16.038:CS Requested 127.0.0.1:4221 (3)
+01:20:16.047:Added new CriticalRequest to queue 127.0.0.1:4221 (3)
+01:20:16.105:Connecting to NODE 127.0.0.1:4225
+01:20:16.114:Establishing Connection to 127.0.0.1:4225
+01:20:16.126:Sending connect only (K) to127.0.0.1:4225
+01:20:16.152:Connecting to NODE 127.0.0.1:4223
+01:20:16.171:Establishing Connection to 127.0.0.1:4223
+01:20:16.180:Sending connect only (K) to127.0.0.1:4223
+01:20:16.207:CS Released 127.0.0.1:4220 
+01:20:16.218:CS Access granted from me to node 127.0.0.1:4221 (3) 
+01:20:16.276:Connecting to NODE 127.0.0.1:4224
+01:20:16.292:Establishing Connection to 127.0.0.1:4224
+01:20:16.305:Sending connect only (K) to127.0.0.1:4224
+01:20:16.346:CS Released 127.0.0.1:4221 
+01:20:24.791:#127.0.0.1:4223:System.Net.Sockets.SocketException (0x80004005): An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   at CloudStationWPF.ClientConnection.ReceiveCallback(IAsyncResult ar) in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\ClientConnection.cs:line 136
+01:20:24.820:Removing NODE (D) 127.0.0.1:4223
+01:20:24.859:Removing NODE (D) 127.0.0.1:4223
+01:20:24.890:Removing NODE (D) 127.0.0.1:4223
+01:20:24.912:Removing NODE (D) 127.0.0.1:4223
+01:20:31.489:#127.0.0.1:4221:System.Net.Sockets.SocketException (0x80004005): An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   at CloudStationWPF.ClientConnection.ReceiveCallback(IAsyncResult ar) in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\ClientConnection.cs:line 136
+01:20:31.506:Removing NODE (D) 127.0.0.1:4221
+01:20:31.532:Removing NODE (D) 127.0.0.1:4221
+01:20:31.547:Removing NODE (D) 127.0.0.1:4221
+01:20:32.117:#127.0.0.1:4220:System.Net.Sockets.SocketException (0x80004005): An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   at CloudStationWPF.ClientConnection.ReceiveCallback(IAsyncResult ar) in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\ClientConnection.cs:line 136
+01:20:32.133:Removing NODE (D) 127.0.0.1:4220
+01:20:32.155:Removing NODE (D) 127.0.0.1:4220
+01:20:33.021:#127.0.0.1:4224:System.Net.Sockets.SocketException (0x80004005): An existing connection was forcibly closed by the remote host
+   at System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   at CloudStationWPF.ClientConnection.ReceiveCallback(IAsyncResult ar) in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\ClientConnection.cs:line 136
+01:20:33.044:Removing NODE (D) 127.0.0.1:4224
+01:32:49.086:Establishing Connection to 127.0.0.1:4221
+01:32:49.098:Socket connected to127.0.0.1:4221
+01:32:49.108:Sending topology connection request
+01:32:49.122:Waiting for a connection...
+01:39:12.055:Establishing Connection to 127.0.0.1:4221
+01:39:12.070:Socket connected to127.0.0.1:4221
+01:39:12.078:Sending topology connection request
+01:39:12.093:Waiting for a connection...
+01:39:12.308:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+01:39:12.325:Recieved configuration - 3|127.0.0.1:4220;127.0.0.1:4223;127.0.0.1:4225;
+01:39:12.348:Waiting for a connection...
+01:39:12.361:Connecting to NODE 127.0.0.1:4224
+01:39:12.374:Establishing Connection to 127.0.0.1:4224
+01:39:12.386:Sending connect only (K) to127.0.0.1:4224
+01:39:12.407:New clients wants to only connect 127.0.0.1:4220
+01:39:12.428:CS Released 127.0.0.1:4221 
+01:39:12.445:Waiting for a connection...
+01:39:12.452:New clients wants to only connect 127.0.0.1:4223
+01:39:12.473:Waiting for a connection...
+01:39:12.482:New clients wants to only connect 127.0.0.1:4225
+01:52:27.061:CS Requested 127.0.0.1:4220 (4)
+01:52:27.075:Added new CriticalRequest to queue 127.0.0.1:4220 (4)
+01:52:27.098:CS Access granted from me to node 127.0.0.1:4220 (4) 
+01:52:27.271:File recieved M|a - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+01:52:27.334:CS Released 127.0.0.1:4220 
+01:52:34.284:CS Requested 127.0.0.1:4220 (5)
+01:52:34.299:Added new CriticalRequest to queue 127.0.0.1:4220 (5)
+01:52:34.315:CS Access granted from me to node 127.0.0.1:4220 (5) 
+01:52:34.466:File recieved M|a - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+01:52:34.498:File recieved M|a - Copy (2).txt|Test file list:
+Life is Strange
+Witcher 3
+
+01:52:34.529:CS Released 127.0.0.1:4220 
+01:52:34.570:CS Requested 127.0.0.1:4220 (6)
+01:52:34.585:Added new CriticalRequest to queue 127.0.0.1:4220 (6)
+01:52:34.599:CS Access granted from me to node 127.0.0.1:4220 (6) 
+01:52:34.692:File recieved M|a - Copy (2).txt|Test file list:
+Life is Strange
+Witcher 3
+
+01:52:34.719:CS Released 127.0.0.1:4220 
