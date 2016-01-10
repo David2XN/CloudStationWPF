@@ -29,7 +29,7 @@ namespace CloudStationWPF
     {
         Thread server;
         string folder = "datax";
-        public static string myExtension = "LISworking";
+        public static string myExtension = ".LISworking";
         string folderPath = "";
         public static MainWindow self;
         public MainWindow()
