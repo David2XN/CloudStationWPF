@@ -295,7 +295,15 @@ namespace CloudStationWPF
                         else
                         {
                             //watcher.EnableRaisingEvents = false;
+                            if (File.Exists(path))
+                                File.Delete(path + myExtension);
                             File.WriteAllText(path+myExtension, conf[2]);
+                            if(File.Exists(path))
+                            {
+                                File.Move(path, path + ".todelete" + myExtension);
+                                File.Delete(path + ".todelete" + myExtension);
+                            }
+
                             File.Move(path + myExtension, path);
                             //watcher.EnableRaisingEvents = true;
                         }
@@ -374,6 +382,7 @@ namespace CloudStationWPF
         }
 
         volatile int runningPort;
+        volatile string runningIP = "";
         volatile int connectingPort;
         volatile string connectIP = "";
         private void btnServer_Click(object sender, RoutedEventArgs e)
@@ -385,7 +394,7 @@ namespace CloudStationWPF
                 Directory.CreateDirectory(folderPath);
 
             CreateFileWatcher(folderPath);
-
+            runningIP = txpMyIPAddress.Text;
             runningPort = int.Parse(txbServerPort.Text);
             stringId = txpMyIPAddress.Text + ":" + runningPort;
             logPath = Path.Combine(Directory.GetCurrentDirectory(), stringId.Replace(':','.') + ".txt");

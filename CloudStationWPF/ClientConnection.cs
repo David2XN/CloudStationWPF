@@ -45,6 +45,10 @@ namespace CloudStationWPF
         private void connectClient(string host, int port)
         {
             //stringId = host + ":" + port;
+            try
+            {
+
+
             TcpClient t = new TcpClient(AddressFamily.InterNetwork);
             //            IPAddress remoteHost = new IPAddress(host);
             IPAddress[] remoteHost = Dns.GetHostAddresses(host);
@@ -66,6 +70,11 @@ namespace CloudStationWPF
 
             //Send("This is a test");
             Receive();
+            }
+            catch (Exception e)
+            {
+                MainWindow.self.writeToLog(e.ToString());
+            }
         }
 
         private void afterConnect()

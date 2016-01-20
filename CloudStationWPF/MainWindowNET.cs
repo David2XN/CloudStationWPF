@@ -21,7 +21,7 @@ namespace CloudStationWPF
             Int32 port = runningPort;
 
 
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            IPAddress ipAddress = IPAddress.Parse(runningIP);
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
             // Create a TCP/IP socket.

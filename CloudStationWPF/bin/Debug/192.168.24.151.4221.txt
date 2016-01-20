@@ -1,0 +1,519 @@
+23:51:21.755:Establishing Connection to 192.168.24.151:4220
+23:51:21.765:Socket connected to192.168.24.151:4220
+23:51:21.772:Sending topology connection request
+23:51:21.788:Waiting for a connection...
+23:51:21.851:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:51:21.866:Recieved configuration - 1|
+23:51:21.881:CS Released 192.168.24.151:4220 
+23:51:46.401:CS Requested 192.168.24.151:4220 (2)
+23:51:46.409:Added new CriticalRequest to queue 192.168.24.151:4220 (2)
+23:51:46.416:CS Access granted from me to node 192.168.24.151:4220 (2) 
+23:51:46.451:Connecting to NODE 192.168.24.153:4222
+23:51:46.470:Establishing Connection to 192.168.24.153:4222
+23:51:46.480:Sending connect only (K) to192.168.24.153:4222
+23:51:46.493:CS Released 192.168.24.151:4220 
+23:51:47.354:CS Requested 192.168.24.151:4220 (3)
+23:51:47.362:Added new CriticalRequest to queue 192.168.24.151:4220 (3)
+23:51:47.373:CS Access granted from me to node 192.168.24.151:4220 (3) 
+23:51:47.432:Connecting to NODE 192.168.24.153:4223
+23:51:47.439:Establishing Connection to 192.168.24.153:4223
+23:51:47.447:Sending connect only (K) to192.168.24.153:4223
+23:51:47.468:CS Released 192.168.24.151:4220 
+23:52:13.989:CS Requested 192.168.24.153:4223 (4)
+23:52:13.996:Added new CriticalRequest to queue 192.168.24.153:4223 (4)
+23:52:14.004:CS Access granted from me to node 192.168.24.153:4223 (4) 
+23:52:14.127:File recieved D|a - Copy - Copy.txt|
+23:52:14.137:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.178:File recieved D|a - Copy (2) - Copy.txt|
+23:52:14.185:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (2) - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (2) - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.204:File recieved D|a - Copy (2).txt|
+23:52:14.213:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (2).txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (2).txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.230:File recieved D|a - Copy (3) - Copy.txt|
+23:52:14.242:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (3) - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (3) - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.263:File recieved D|a - Copy (3).txt|
+23:52:14.273:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (3).txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (3).txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.294:CS Released 192.168.24.153:4223 
+23:52:14.307:CS Requested 192.168.24.153:4223 (5)
+23:52:14.320:Added new CriticalRequest to queue 192.168.24.153:4223 (5)
+23:52:14.329:CS Access granted from me to node 192.168.24.153:4223 (5) 
+23:52:14.425:File recieved D|a - Copy (4) - Copy.txt|
+23:52:14.432:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (4) - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (4) - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.476:File recieved D|a - Copy (4).txt|
+23:52:14.484:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (4).txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (4).txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.517:File recieved D|a - Copy (5) - Copy.txt|
+23:52:14.530:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (5) - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (5) - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.549:File recieved D|a - Copy.txt|
+23:52:14.559:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:14.577:File recieved D|a.txt|
+23:52:14.598:CS Released 192.168.24.153:4223 
+23:52:19.504:CS Requested 192.168.24.153:4222 (6)
+23:52:19.511:Added new CriticalRequest to queue 192.168.24.153:4222 (6)
+23:52:19.519:CS Access granted from me to node 192.168.24.153:4222 (6) 
+23:52:19.622:File recieved D|a - Copy - Copy.txt|
+23:52:19.630:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:19.672:CS Released 192.168.24.153:4222 
+23:52:19.724:CS Requested 192.168.24.153:4222 (7)
+23:52:19.732:Added new CriticalRequest to queue 192.168.24.153:4222 (7)
+23:52:19.740:CS Access granted from me to node 192.168.24.153:4222 (7) 
+23:52:19.828:File recieved D|a - Copy (4) - Copy.txt|
+23:52:19.836:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (4) - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (4) - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:19.878:File recieved D|a - Copy (5) - Copy.txt|
+23:52:19.889:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (5) - Copy.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (5) - Copy.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:19.907:File recieved D|a.txt|
+23:52:19.916:System.IO.FileNotFoundException: Could not find file 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a.txt'.
+File name: 'E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a.txt'
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 292
+23:52:19.934:CS Released 192.168.24.153:4222 
+23:52:26.107:CS Requested 192.168.24.151:4220 (8)
+23:52:26.115:Added new CriticalRequest to queue 192.168.24.151:4220 (8)
+23:52:26.124:CS Access granted from me to node 192.168.24.151:4220 (8) 
+23:52:26.201:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:26.228:CS Released 192.168.24.151:4220 
+23:52:39.861:CS Requested 192.168.24.151:4220 (9)
+23:52:39.869:Added new CriticalRequest to queue 192.168.24.151:4220 (9)
+23:52:39.878:CS Access granted from me to node 192.168.24.151:4220 (9) 
+23:52:39.961:File recieved M|a - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:39.984:CS Released 192.168.24.151:4220 
+23:52:40.241:CS Requested 192.168.24.151:4220 (10)
+23:52:40.253:Added new CriticalRequest to queue 192.168.24.151:4220 (10)
+23:52:40.261:CS Access granted from me to node 192.168.24.151:4220 (10) 
+23:52:40.436:File recieved M|a - Copy (2).txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:40.454:CS Released 192.168.24.151:4220 
+23:52:41.482:CS Requested 192.168.24.151:4220 (11)
+23:52:41.489:Added new CriticalRequest to queue 192.168.24.151:4220 (11)
+23:52:41.497:CS Access granted from me to node 192.168.24.151:4220 (11) 
+23:52:41.565:File recieved M|a - Copy (3).txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:41.589:CS Released 192.168.24.151:4220 
+23:52:41.667:CS Requested 192.168.24.151:4220 (12)
+23:52:41.676:Added new CriticalRequest to queue 192.168.24.151:4220 (12)
+23:52:41.685:CS Access granted from me to node 192.168.24.151:4220 (12) 
+23:52:41.896:File recieved M|a - Copy (4).txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:41.916:File recieved M|a - Copy (5).txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:41.936:CS Released 192.168.24.151:4220 
+23:52:41.973:CS Requested 192.168.24.151:4220 (13)
+23:52:41.983:Added new CriticalRequest to queue 192.168.24.151:4220 (13)
+23:52:41.993:CS Access granted from me to node 192.168.24.151:4220 (13) 
+23:52:42.221:File recieved M|a - Copy (6).txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:42.237:CS Released 192.168.24.151:4220 
+23:52:50.720:Added task file: a - Copy (5) - Copy.txt Created
+23:52:50.729:I want enter Critical Section
+23:52:50.737:Added new CriticalRequest to queue 192.168.24.151:4221 (14)
+23:52:50.745:Added task file: a - Copy (5) - Copy.txt Changed
+23:52:50.756:Added task file: a - Copy (5) - Copy.txt Changed
+23:52:50.766:CS Access granted to me from 192.168.24.153:4222
+23:52:50.779:CS Access granted to me from 192.168.24.151:4220
+23:52:50.797:CS Access granted to me from 192.168.24.153:4223
+23:52:50.811:Entered Critical Section
+23:52:50.821:Sending file E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\bin\Debug\data1\a - Copy (5) - Copy.txt
+23:52:50.835:CS Leaved by me
+23:52:55.679:CS Requested 192.168.24.153:4223 (15)
+23:52:55.687:Added new CriticalRequest to queue 192.168.24.153:4223 (15)
+23:52:55.699:CS Access granted from me to node 192.168.24.153:4223 (15) 
+23:52:55.778:File recieved M|a - Copy (6) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:55.833:CS Released 192.168.24.153:4223 
+23:52:55.907:CS Requested 192.168.24.153:4223 (16)
+23:52:55.920:Added new CriticalRequest to queue 192.168.24.153:4223 (16)
+23:52:55.928:CS Access granted from me to node 192.168.24.153:4223 (16) 
+23:52:55.999:File recieved M|a - Copy (6) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:52:56.012:System.IO.IOException: Cannot create a file when that file already exists.
+
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 299
+23:52:56.049:CS Released 192.168.24.153:4223 
+23:53:24.864:CS Requested 192.168.24.153:4223 (17)
+23:53:24.872:Added new CriticalRequest to queue 192.168.24.153:4223 (17)
+23:53:24.881:CS Access granted from me to node 192.168.24.153:4223 (17) 
+23:53:24.954:File recieved M|a - Copy (4) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:53:25.004:CS Released 192.168.24.153:4223 
+23:53:25.054:CS Requested 192.168.24.153:4223 (18)
+23:53:25.063:Added new CriticalRequest to queue 192.168.24.153:4223 (18)
+23:53:25.075:CS Access granted from me to node 192.168.24.153:4223 (18) 
+23:53:25.121:File recieved M|a - Copy (4) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:53:25.146:System.IO.IOException: Cannot create a file when that file already exists.
+
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   at System.IO.File.Move(String sourceFileName, String destFileName)
+   at CloudStationWPF.MainWindow.<>c__DisplayClass24_0.<receivedMessage>b__0() in E:\Documents\GitHub\CloudStationWPF\CloudStationWPF\MainWindow.xaml.cs:line 299
+23:53:25.172:CS Released 192.168.24.153:4223 
+23:56:11.505:Establishing Connection to 192.168.24.151:4220
+23:56:11.518:Socket connected to192.168.24.151:4220
+23:56:11.530:Sending topology connection request
+23:56:11.545:Waiting for a connection...
+23:56:11.608:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:56:11.690:Recieved configuration - 1|
+23:56:11.705:CS Released 192.168.24.151:4220 
+23:56:33.354:CS Requested 192.168.24.151:4220 (2)
+23:56:33.361:Added new CriticalRequest to queue 192.168.24.151:4220 (2)
+23:56:33.369:CS Access granted from me to node 192.168.24.151:4220 (2) 
+23:56:33.414:Connecting to NODE 192.168.24.153:4222
+23:56:33.421:Establishing Connection to 192.168.24.153:4222
+23:56:33.430:Sending connect only (K) to192.168.24.153:4222
+23:56:33.451:CS Released 192.168.24.151:4220 
+23:56:33.693:File recieved D|a.txt|
+23:56:33.743:CS Released 192.168.24.153:4222 
+23:56:34.361:CS Requested 192.168.24.151:4220 (3)
+23:56:34.373:Added new CriticalRequest to queue 192.168.24.151:4220 (3)
+23:56:34.392:CS Access granted from me to node 192.168.24.151:4220 (3) 
+23:56:34.429:Connecting to NODE 192.168.24.153:4223
+23:56:34.438:Establishing Connection to 192.168.24.153:4223
+23:56:34.448:Sending connect only (K) to192.168.24.153:4223
+23:56:34.465:CS Released 192.168.24.151:4220 
+23:56:51.049:CS Requested 192.168.24.151:4220 (4)
+23:56:51.063:Added new CriticalRequest to queue 192.168.24.151:4220 (4)
+23:56:51.075:CS Access granted from me to node 192.168.24.151:4220 (4) 
+23:56:51.143:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:56:51.171:CS Released 192.168.24.151:4220 
+23:56:51.216:CS Requested 192.168.24.153:4222 (5)
+23:56:51.223:Added new CriticalRequest to queue 192.168.24.153:4222 (5)
+23:56:51.231:CS Access granted from me to node 192.168.24.153:4222 (5) 
+23:56:51.437:File recieved D|a.txt|
+23:56:51.488:CS Released 192.168.24.153:4222 
+23:57:05.578:CS Requested 192.168.24.151:4220 (6)
+23:57:05.590:Added new CriticalRequest to queue 192.168.24.151:4220 (6)
+23:57:05.603:CS Access granted from me to node 192.168.24.151:4220 (6) 
+23:57:05.670:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+23:57:05.694:CS Released 192.168.24.151:4220 
+23:57:05.746:CS Requested 192.168.24.153:4222 (7)
+23:57:05.754:Added new CriticalRequest to queue 192.168.24.153:4222 (7)
+23:57:05.766:CS Access granted from me to node 192.168.24.153:4222 (7) 
+23:57:05.953:File recieved D|a.txt|
+23:57:06.004:CS Released 192.168.24.153:4222 
+00:02:39.340:Establishing Connection to 192.168.24.151:4220
+00:02:39.350:Socket connected to192.168.24.151:4220
+00:02:39.357:Sending topology connection request
+00:02:39.369:Waiting for a connection...
+00:02:39.412:Recieved configuration - 1|
+00:02:39.431:CS Released 192.168.24.151:4220 
+00:02:46.904:CS Requested 192.168.24.151:4220 (2)
+00:02:46.917:Added new CriticalRequest to queue 192.168.24.151:4220 (2)
+00:02:46.925:CS Access granted from me to node 192.168.24.151:4220 (2) 
+00:02:46.956:Connecting to NODE 192.168.24.153:4222
+00:02:46.964:Establishing Connection to 192.168.24.153:4222
+00:02:46.973:Sending connect only (K) to192.168.24.153:4222
+00:02:46.990:CS Released 192.168.24.151:4220 
+00:02:47.921:CS Requested 192.168.24.151:4220 (3)
+00:02:47.930:Added new CriticalRequest to queue 192.168.24.151:4220 (3)
+00:02:47.938:CS Access granted from me to node 192.168.24.151:4220 (3) 
+00:02:47.977:Connecting to NODE 192.168.24.153:4223
+00:02:47.985:Establishing Connection to 192.168.24.153:4223
+00:02:47.996:Sending connect only (K) to192.168.24.153:4223
+00:02:48.030:CS Released 192.168.24.151:4220 
+00:02:59.524:CS Requested 192.168.24.151:4220 (4)
+00:02:59.532:Added new CriticalRequest to queue 192.168.24.151:4220 (4)
+00:02:59.539:CS Access granted from me to node 192.168.24.151:4220 (4) 
+00:02:59.614:File recieved M|a.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:02:59.639:CS Released 192.168.24.151:4220 
+00:03:06.208:CS Requested 192.168.24.151:4220 (5)
+00:03:06.216:Added new CriticalRequest to queue 192.168.24.151:4220 (5)
+00:03:06.228:CS Access granted from me to node 192.168.24.151:4220 (5) 
+00:03:06.294:File recieved M|a - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:06.316:CS Released 192.168.24.151:4220 
+00:03:06.408:CS Requested 192.168.24.151:4220 (6)
+00:03:06.416:Added new CriticalRequest to queue 192.168.24.151:4220 (6)
+00:03:06.424:CS Access granted from me to node 192.168.24.151:4220 (6) 
+00:03:06.607:File recieved M|a - Copy (2).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:06.633:File recieved M|a - Copy (3).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:06.657:CS Released 192.168.24.151:4220 
+00:03:06.698:CS Requested 192.168.24.151:4220 (7)
+00:03:06.709:Added new CriticalRequest to queue 192.168.24.151:4220 (7)
+00:03:06.722:CS Access granted from me to node 192.168.24.151:4220 (7) 
+00:03:06.945:File recieved M|a - Copy (4).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:06.961:File recieved M|a - Copy (5).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:06.982:File recieved M|a - Copy (6).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:06.999:CS Released 192.168.24.151:4220 
+00:03:07.022:CS Requested 192.168.24.151:4220 (8)
+00:03:07.031:Added new CriticalRequest to queue 192.168.24.151:4220 (8)
+00:03:07.042:CS Access granted from me to node 192.168.24.151:4220 (8) 
+00:03:07.332:File recieved M|a - Copy (7).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:07.367:File recieved M|a - Copy (8).txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:07.395:CS Released 192.168.24.151:4220 
+00:03:16.173:CS Requested 192.168.24.153:4222 (9)
+00:03:16.181:Added new CriticalRequest to queue 192.168.24.153:4222 (9)
+00:03:16.191:CS Access granted from me to node 192.168.24.153:4222 (9) 
+00:03:16.271:File recieved M|a - Copy (4) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:16.322:CS Released 192.168.24.153:4222 
+00:03:16.373:CS Requested 192.168.24.153:4222 (10)
+00:03:16.380:Added new CriticalRequest to queue 192.168.24.153:4222 (10)
+00:03:16.388:CS Access granted from me to node 192.168.24.153:4222 (10) 
+00:03:16.439:File recieved M|a - Copy (4) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:16.490:CS Released 192.168.24.153:4222 
+00:03:17.906:CS Requested 192.168.24.153:4222 (11)
+00:03:17.914:Added new CriticalRequest to queue 192.168.24.153:4222 (11)
+00:03:17.921:CS Access granted from me to node 192.168.24.153:4222 (11) 
+00:03:17.974:File recieved M|a - Copy (5) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:18.025:CS Released 192.168.24.153:4222 
+00:03:18.076:CS Requested 192.168.24.153:4222 (12)
+00:03:18.085:Added new CriticalRequest to queue 192.168.24.153:4222 (12)
+00:03:18.093:CS Access granted from me to node 192.168.24.153:4222 (12) 
+00:03:18.136:File recieved M|a - Copy (5) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:18.187:CS Released 192.168.24.153:4222 
+00:03:18.255:CS Requested 192.168.24.153:4222 (13)
+00:03:18.263:Added new CriticalRequest to queue 192.168.24.153:4222 (13)
+00:03:18.275:CS Access granted from me to node 192.168.24.153:4222 (13) 
+00:03:18.378:File recieved M|a - Copy (6) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:18.430:CS Released 192.168.24.153:4222 
+00:03:18.480:CS Requested 192.168.24.153:4222 (14)
+00:03:18.488:Added new CriticalRequest to queue 192.168.24.153:4222 (14)
+00:03:18.496:CS Access granted from me to node 192.168.24.153:4222 (14) 
+00:03:18.572:File recieved M|a - Copy (6) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:18.626:CS Released 192.168.24.153:4222 
+00:03:18.680:CS Requested 192.168.24.153:4222 (15)
+00:03:18.688:Added new CriticalRequest to queue 192.168.24.153:4222 (15)
+00:03:18.696:CS Access granted from me to node 192.168.24.153:4222 (15) 
+00:03:18.751:File recieved M|a - Copy (7) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:18.802:CS Released 192.168.24.153:4222 
+00:03:25.459:CS Requested 192.168.24.153:4222 (16)
+00:03:25.467:Added new CriticalRequest to queue 192.168.24.153:4222 (16)
+00:03:25.476:CS Access granted from me to node 192.168.24.153:4222 (16) 
+00:03:25.552:File recieved M|a - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:25.603:CS Released 192.168.24.153:4222 
+00:03:25.654:CS Requested 192.168.24.153:4222 (17)
+00:03:25.662:Added new CriticalRequest to queue 192.168.24.153:4222 (17)
+00:03:25.670:CS Access granted from me to node 192.168.24.153:4222 (17) 
+00:03:25.735:File recieved M|a - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:25.789:File recieved M|a - Copy (2) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:25.804:CS Released 192.168.24.153:4222 
+00:03:25.817:CS Requested 192.168.24.153:4222 (18)
+00:03:25.826:Added new CriticalRequest to queue 192.168.24.153:4222 (18)
+00:03:25.834:CS Access granted from me to node 192.168.24.153:4222 (18) 
+00:03:25.926:File recieved M|a - Copy (2) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:25.978:File recieved M|a - Copy (3) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:25.996:File recieved M|a - Copy (4) - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.064:CS Released 192.168.24.153:4222 
+00:03:26.115:CS Requested 192.168.24.153:4222 (19)
+00:03:26.123:Added new CriticalRequest to queue 192.168.24.153:4222 (19)
+00:03:26.131:CS Access granted from me to node 192.168.24.153:4222 (19) 
+00:03:26.329:File recieved M|a - Copy (4) - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.380:File recieved M|a - Copy (8) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.396:File recieved M|a - Copy (5) - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.430:File recieved M|a - Copy (9) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.445:File recieved M|a - Copy (6) - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.481:File recieved M|a - Copy (10) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.504:File recieved M|a - Copy (7) - Copy - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.556:File recieved M|a - Copy (11) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.585:CS Released 192.168.24.153:4222 
+00:03:26.636:CS Requested 192.168.24.153:4222 (20)
+00:03:26.644:Added new CriticalRequest to queue 192.168.24.153:4222 (20)
+00:03:26.656:CS Access granted from me to node 192.168.24.153:4222 (20) 
+00:03:26.785:File recieved M|a - Copy (11) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.837:File recieved M|a - Copy (12) - Copy.txt|Test file list:
+Life is Strange
+Witcher 3
+
+00:03:26.888:CS Released 192.168.24.153:4222 
+00:03:40.214:CS Requested 192.168.24.153:4222 (21)
+00:03:40.221:Added new CriticalRequest to queue 192.168.24.153:4222 (21)
+00:03:40.229:CS Access granted from me to node 192.168.24.153:4222 (21) 
+00:03:40.288:File recieved M|a.txt|sdfascasfasdf
+
+00:03:40.340:CS Released 192.168.24.153:4222 
+00:03:40.390:CS Requested 192.168.24.153:4222 (22)
+00:03:40.397:Added new CriticalRequest to queue 192.168.24.153:4222 (22)
+00:03:40.409:CS Access granted from me to node 192.168.24.153:4222 (22) 
+00:03:40.445:File recieved M|a.txt|sdfascasfasdf
+
+00:03:40.496:CS Released 192.168.24.153:4222 
